@@ -1,33 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { Fragment,lazy,Suspense } from 'react'
+import { NavLink, Routes, Route } from 'react-router-dom'
 
-function App() {
-  const [count, setCount] = useState(0)
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+// import MovieCard from './components/movie/MovieCard'
+import SearchMovie from './components/movie/SearchMovie'
+// import MoviesList from './components/movie/MoviesList';
+import MovieBanner from './components/banner/MovieBanner';
+// import Header from './components/layout/Header';
+import Main from './components/layout/Main';
+// import HomePage from './pages/HomePage';
+// import MoviePage from './pages/MoviePage';
+// import MovieDetailsPage from './pages/MovieDetailsPage';
+const HomePage = lazy(() => import('./pages/HomePage'))
+const MoviePage = lazy(() => import('./pages/MoviePage'))
+const MovieDetailsPage = lazy(() => import('./pages/MovieDetailsPage'))
+// https://api.themoviedb.org/3/movie/now_playing?api_key=33ca101e71974821d244c04ed6f31284&language=vi
+function App()
+{
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    <Fragment>
+      <Suspense fallback={<></>}>
+      <Routes>
+        <Route element={<Main />}>
+          {/* <Route path='/' element={ <SearchMovie />}></Route>
+          <Route path="/" element={<MovieBanner/>} /> */}
+          <Route path="/" element={
+            <>
+              {/* <SearchMovie /> */}
+              <MovieBanner />
+              <HomePage />
+            </>
+          }
+          />
+          <Route path='/movies' element={
+            <>
+            {/* <SearchMovie /> */}
+            <MoviePage/>
+            </>
+          } 
+            />
+          <Route path='/movies/:moviesId' element={
+            <>
+            <MovieDetailsPage/>
+          </>} />
+        </Route>
+      </Routes>
+      {/* header */}
+      {/* <Header/> */}
+
+
+        {/* <HomePage/> */}
+        </Suspense>
+    </Fragment>
   )
 }
 
