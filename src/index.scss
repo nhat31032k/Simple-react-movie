@@ -25,6 +25,17 @@
         // padding-bottom: 20px;
     }
 
+
+
+}
+
+.movies-list {
+    .movie-item {
+        @media screen and (min-width: 375px) {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+    }
 }
 
 .pagination {
